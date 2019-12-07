@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Архив статей</title>
+{% load static %}
+<link rel="stylesheet" href="static/index6.css">
+</head>
+<body>
+<p>{{user.username}}</p>
+
+<div class="header">
+
+<img class="image" src="static/pic1.png"/>
+    <div class="header-text-area">
+        <p class="service-title">Коллективный блог</p>
+        <a href="/register/" class="register-link">Регистрация</a>
+        <a href="/login/" class="register-link">Вход</a>
+    </div>
+    <div class="icons-for-parallax">
+        <img class="icon-for-parallax-first" src="static/писторлет.png">
+        <img class="icon-for-parallax-second"  src="static/писторлет.png">
+        <img class="icon-for-parallax-third"  src="static/писторлет.png">
+    </div>
+</div>
+
+<div class="archive">
+    {% for post in posts %}
+    <div class="one-post">
+        <a class="post-title", href="{{post.id}}">{{ post.title }}</a>
+        <button class="fold-button">Развернуть</button>
+        <div class="article-info">
+            <div class="article-author">{{ post.author.username }}</div>
+            <div class="article-created-date">{{ post.created_date }}</div>
+        </div>
+        <p class="article-text">{{ post.get_excerpt }}</p>
+        <div class="one-post-shadow"></div>
+    </div>
+    {% endfor %}
+</div>
+<script src="static/js/jquery.js"></script>
+<script language="JavaScript" src="static/js/1.js"></script>
+<script language="JavaScript" src="static/js/2.js"></script>
+<script language="JavaScript" src="static/js/3.js"></script>
+<script language="JavaScript" src="static/js/4.js"></script>
+</body>
+</html>

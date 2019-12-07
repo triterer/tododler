@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>login</title>
-
+    <link href="/static/someshit.css"
 
 </head>
 <body>
+	<a href="/webpath/createmes/">add message</a>
+	<div class="content">
 	{% for pot in posts %}
+		<div class="one-mes">
 		Кому:{{ pot.toUser1 }}
 		Текст:{{ pot.text }}
 		Когда:{{ pot.toDate }}
+		</div>
 	{% endfor %}
+	{{ err }}
+	</div>
 </body>
 </html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Архив й</title>
+    <link rel="stylesheet" href="static/indexst.css">
+</head>
+<body>
+<div class="header">
+    <p class="post-title">{{ post.title }}</p>
+</div>
+<div class="archive">
+    <div class="one-post">
+        <div class="article-info">
+            <div class="article-author">{{ post.author.username }}</div>
+            <div class="article-created-date">{{ post.created_date }}</div>
+        </div>
+        <p class="article-text">{{ post.get_excerpt }}</p>
+         <a class="return", href="/">К архву</a>
+    </div>
+</div>
+</body>
+</html>

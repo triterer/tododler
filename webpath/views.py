@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
@@ -18,7 +18,7 @@ def reguser(request):
 			User.objects.create_user(username = form['username'], password = form['password'])
 			user = authenticate(username=form['username'], password = form['password'])
 			login(request, user)
-			return render(request, 'allpage.html/', { 'messages':Messages.objects.filter(toUser = user.id) })
+			return redirect('show_all')
 	else:
 		return render(request, 'regpage.html')
 
@@ -27,10 +27,13 @@ def reguser(request):
 
 
 @login_required(login_url='logpage.html')
-def show_all(request, usname):
-	us = User.objects.get(username = usname)
-	posts = Messages.objects.get(toUser = us)
-	return render(request, 'allpage.html', {'posts':posts})
+def showall(request):
+	us = request.user
+	try:
+		posreturnts = Messages.objects.filter(toUser = us.id)
+		return render(request, 'allpage.html', {'posts':posreturnts})
+	except:
+		return render(request, 'allpage.html',{'err':'no messages for U'})
 
 
 
@@ -41,9 +44,21 @@ def loguser(request):
 		user = authenticate(username = form['username'], password = form['password'])
 		if user is not None:
 			login(request, user)
-			return render(request, 'allpage.html', {'messages':Messages.objects.filter(toUser = user.id)})
+			return redirect('/webpath/allpage/')
 		else:
 			form['errors'] = "Wrong password or username"
 			return render(request, 'logpage.html', {'form':form})
 	else:
 		return render(request, 'logpage.html')
+
+
+@login_required(login_url='logpage.html')
+def create_new(request):
+	if request.method == "POST":
+		tu = request.user #do you now what time it is?
+		form = { 'text':request.POST['text'], 'toDate':request.POST['toDate']}
+		Messages.objects.create(toUser = tu, text = form['text'], toDate = form['toDate'])
+		return redirect('/webpath/allpage/')
+	return render(request,'createmes.html')
+
+

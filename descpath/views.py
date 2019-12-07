@@ -40,21 +40,27 @@ def authentification(request):
 	if us is not None:
 		ret1 = User.objects.get(username = Uname)
 		ret = Messages.objects.filter(toUser = ret1.id)
-		answer = {}
+		count = Messages.objects.filter(toUser = ret1.id).count()
+		answer = {'count':str(count)}
+		asd = 0
 		for i in ret:
-			answer.update({'text':i.text,'todatee':str(i.toDate)})
+			answer.update({'text'+str(asd):i.text})
+			answer.update({'todate'+str(asd):str(i.toDate)})
+			asd+=1
 		answer = json.dumps(answer)
-		#answer = json.loads(answer)
-		print (type(answer))
 		return HttpResponse(answer, content_type='application/json')
 	else:
 		return HttpResponse('not registred')
 
+
 @csrf_exempt
 def create_mes(request):
-	recieved = json.loads(request.body)
-	us = User.objects.get(username = recieved['toUser'])
-	Messages.objects.create(toUser=us, text = recieved['text'], toDate = recieved['toDate'])
-	return HttpResponse('1')
+	try:
+		recieved = json.loads(request.body)
+		us = User.objects.get(username = recieved['toUser'])
+		Messages.objects.create(toUser=us, text = recieved['text'], toDate = recieved['toDate'])
+		return HttpResponse('1')
+	except:
+		return HttpResponse('no such user')
 
 

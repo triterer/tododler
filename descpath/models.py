@@ -8,11 +8,8 @@ from django.contrib.auth.models import User
 
 class Messages(models.Model):
     #id = model.IntegerField()#(db.Integer, primary_key = True)
-    #class Meta:
-    #    db_table = "messages_db"
-    toUser = models.ForeignKey(User,on_delete=models.DO_NOTHING, related_name='desctouser')#(db.String(20),db.ForeignKey('user.name'), nullable = False)
-    text = models.TextField()
-    toDate = models.DateTimeField()#(db.Date, default = date.today)
-
-    #question_text = models.CharField(max_length=200)
-    #pub_date = models.DateTimeField('date published')
+	class Meta:
+ 		db_table = "messages_db"
+	toUser = models.ForeignKey(User ,on_delete=models.DO_NOTHING, related_name='user2')
+	text = models.TextField()
+	toDate = models.DateTimeField()
